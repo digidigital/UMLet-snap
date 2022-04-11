@@ -16,7 +16,7 @@ grade: stable
 confinement: strict
 architectures: [amd64]
 compression: lzo
-license: MIT
+license: GPL-3.0-only
 environment:
   JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64/bin
   JAVA_CMD: $SNAP/usr/lib/jvm/java-11-openjdk-amd64/bin/java
