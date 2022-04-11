@@ -23,9 +23,7 @@ environment:
   UMLET_JAVA_OPTS: -Duser.home=$SNAP_USER_DATA -Dlog4j.configuration=file:$SNAP/Umlet/log4j.properties
   UMLET_HOME: $SNAP/Umlet
   PATH: $SNAP/usr/lib/jvm/java-11-openjdk-amd64/bin:$SNAP/Umlet:$PATH
-  LD_LIBRARY_PATH: ${SNAP}/usr/lib/x86_64-linux-gnu/gvfs:${LD_LIBRARY_PATH}
-  #GTK_USE_PORTAL: 1
-  #G_MESSAGES_DEBUG: all
+  LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib
 
 apps:
   umlet-standalone:
@@ -37,13 +35,11 @@ apps:
       - removable-media
       - optical-drive
       - unity7
-      #- unity8
       - network 
       - mount-observe
       - process-control
       - network-bind
       - network-observe
-      #- desktop-launch
 
 parts:
   get-jar:
@@ -87,19 +83,15 @@ parts:
       
       snapcraftctl prime
       
-      rm ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
-      #rm ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts
-      touch ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
-      #touch ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts
-      
-      
+      rm ${SNAPCRAFT_STAGE}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
+      touch ${SNAPCRAFT_STAGE}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
+
   packages:
     plugin: nil
     stage-packages:  
       - openjdk-11-jre
       - ca-certificates
       - ca-certificates-java
-      - gvfs
     build-packages:
       - ca-certificates
       - ca-certificates-java
