@@ -23,7 +23,7 @@ environment:
   UMLET_JAVA_OPTS: -Duser.home=$SNAP_USER_DATA -Dlog4j.configuration=file:$SNAP/Umlet/log4j.properties
   UMLET_HOME: $SNAP/Umlet
   PATH: $SNAP/usr/lib/jvm/java-11-openjdk-amd64/bin:$SNAP/Umlet:$PATH
-  #LD_LIBRARY_PATH: ${LD_LIBRARY_PATH}:${SNAP}/usr/lib/x86_64-linux-gnu/gvfs
+  LD_LIBRARY_PATH: ${SNAP}/usr/lib/x86_64-linux-gnu/gvfs:${LD_LIBRARY_PATH}
   #GTK_USE_PORTAL: 1
   #G_MESSAGES_DEBUG: all
 
@@ -99,7 +99,6 @@ parts:
       - openjdk-11-jre
       - ca-certificates
       - ca-certificates-java
-      - libgnome-2-0
       - gvfs
     build-packages:
       - ca-certificates
