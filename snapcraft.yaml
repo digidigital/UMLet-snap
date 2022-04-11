@@ -70,7 +70,8 @@ parts:
       log4j.appender.console.layout.conversionPattern=%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %p %m%n' > $SNAPCRAFT_PART_INSTALL/Umlet/log4j.properties
     
     override-prime: |
-      echo '[Desktop Entry]\nEncoding=UTF-8
+      echo '[Desktop Entry]
+      Encoding=UTF-8
       Type=Application
       Name=UMLet
       GenericName=UMLet
