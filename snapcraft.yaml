@@ -1,0 +1,104 @@
+name: umlet-standalone
+title: UMLet
+version: '14.3.0'
+summary: Free UML Tool for Fast UML Diagrams 
+description: |
+  UMLet is a free, open-source UML tool with a simple user interface: draw UML diagrams fast,
+  build sequence and activity diagrams from plain text, export diagrams to eps, pdf, jpg, svg,
+  and clipboard, share diagrams using Eclipse, and create new, custom UML elements. 
+
+  This is a community build based on the standalone executable without support by the upstream 
+  authors. 
+  
+  Official downloads are available on https:/www.umlet.com 
+base: core18  
+grade: stable 
+confinement: strict
+architectures: [amd64]
+compression: lzo
+license: MIT
+environment:
+  JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64/bin
+  JAVA_CMD: $SNAP/usr/lib/jvm/java-11-openjdk-amd64/bin/java
+  UMLET_JAVA_OPTS: -Duser.home=$SNAP_USER_DATA -Dlog4j.configuration=file:$SNAP/Umlet/log4j.properties
+  UMLET_HOME: $SNAP/Umlet
+  PATH: $SNAP/usr/lib/jvm/java-11-openjdk-amd64/bin:$SNAP/Umlet:$PATH
+  #LD_LIBRARY_PATH: ${LD_LIBRARY_PATH}:${SNAP}/usr/lib/x86_64-linux-gnu/gvfs
+  #GTK_USE_PORTAL: 1
+  #G_MESSAGES_DEBUG: all
+
+apps:
+  umlet-standalone:
+    command: Umlet/umlet.sh
+    desktop: usr/share/applications/umlet-standalone.desktop
+    extensions: [gnome-3-28]
+    plugs:
+      - home
+      - removable-media
+      - optical-drive
+      - unity7
+      - unity8
+      - network 
+      - mount-observe
+      - process-control
+      - network-bind
+      - network-observe
+      - desktop-launch
+
+parts:
+  get-jar:
+    plugin: nil 
+    build-packages:
+      - wget
+      - unzip
+    override-build: |
+      wget https://www.umlet.com/download/umlet_14_3/umlet-standalone-14.3.0.zip      
+      unzip -o -d $SNAPCRAFT_PART_INSTALL umlet*.zip 
+      
+      chmod +x $SNAPCRAFT_PART_INSTALL/Umlet/umlet.sh
+      mkdir -p ${SNAPCRAFT_PRIME}/usr/share/applications
+      cp -r ${SNAPCRAFT_PART_INSTALL}/Umlet/img/umlet_logo.png ${SNAPCRAFT_PRIME}/usr/share/applications/umlet-standalone.png
+      
+      echo 'log4j.rootLogger=TRACE, console
+      log4j.logger.com.baselet.control.basics.geom.Line=INFO
+      log4j.logger.com.baselet.element.elementnew.plot.PlotGrid=INFO
+      log4j.logger.com.baselet.element.relation.facet.RelationLineTypeFacet=INFO
+      log4j.logger.com.baselet.diagram.DrawPanel=INFO
+      log4j.logger.com.baselet.gui.listener.GridElementListener=INFO
+      log4j.rootCategory=info,console
+      log4j.appender.console=org.apache.log4j.ConsoleAppender
+      log4j.appender.console.target=System.out
+      log4j.appender.console.immediateFlush=true
+      log4j.appender.console.encoding=UTF-8
+      log4j.appender.console.layout=org.apache.log4j.PatternLayout
+      log4j.appender.console.layout.conversionPattern=%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %p %m%n' > $SNAPCRAFT_PART_INSTALL/Umlet/log4j.properties
+    
+    override-prime: |
+      echo '[Desktop Entry]\nEncoding=UTF-8
+      Type=Application
+      Name=UMLet
+      GenericName=UMLet
+      Comment=Free UML Tool for Fast UML Diagrams
+      Exec=umlet-standalone
+      Icon=usr/share/applications/umlet-standalone.png
+      Terminal=false
+      Categories=Development;
+      StartupNotify=true' > ${SNAPCRAFT_PRIME}/usr/share/applications/umlet-standalone.desktop
+      
+      snapcraftctl prime
+      
+      rm ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
+      rm ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts
+      rm ${SNAPCRAFT_PRIME}/usr/share/epiphany-browser/mime-types-permissions.xml
+      touch ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
+      touch ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts
+      touch ${SNAPCRAFT_PRIME}/usr/share/epiphany-browser/mime-types-permissions.xml
+      
+  packages:
+    plugin: nil
+    stage-packages:  
+      - openjdk-11-jre
+      - ca-certificates
+      - ca-certificates-java
+      - libgnome-2-0
+      - gvfs
