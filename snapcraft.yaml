@@ -11,7 +11,7 @@ description: |
   authors. 
   
   Official downloads are available on https:/www.umlet.com 
-base: core18  
+base: core20  
 grade: stable 
 confinement: strict
 architectures: [amd64]
@@ -31,19 +31,19 @@ apps:
   umlet-standalone:
     command: Umlet/umlet.sh
     desktop: usr/share/applications/umlet-standalone.desktop
-    extensions: [gnome-3-28]
+    extensions: [gnome-3-38]
     plugs:
       - home
       - removable-media
       - optical-drive
       - unity7
-      - unity8
+      #- unity8
       - network 
       - mount-observe
       - process-control
       - network-bind
       - network-observe
-      - desktop-launch
+      #- desktop-launch
 
 parts:
   get-jar:
@@ -87,12 +87,11 @@ parts:
       
       snapcraftctl prime
       
-      #rm ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
+      rm ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
       #rm ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts
-      #rm ${SNAPCRAFT_PRIME}/usr/share/epiphany-browser/mime-types-permissions.xml
-      #touch ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
+      touch ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
       #touch ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts
-      #touch ${SNAPCRAFT_PRIME}/usr/share/epiphany-browser/mime-types-permissions.xml
+      
       
   packages:
     plugin: nil
@@ -102,3 +101,6 @@ parts:
       - ca-certificates-java
       - libgnome-2-0
       - gvfs
+    build-packages:
+      - ca-certificates
+      - ca-certificates-java
