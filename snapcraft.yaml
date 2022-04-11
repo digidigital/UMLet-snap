@@ -7,7 +7,7 @@ description: |
   build sequence and activity diagrams from plain text, export diagrams to eps, pdf, jpg, svg,
   and clipboard, share diagrams using Eclipse, and create new, custom UML elements. 
 
-  This is a community build based on the standalone executable without support by the upstream 
+  This is a community build based on the standalone executable without support by the original 
   authors. 
   
   Official downloads are available on https:/www.umlet.com 
