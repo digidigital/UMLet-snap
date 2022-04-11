@@ -87,12 +87,12 @@ parts:
       
       snapcraftctl prime
       
-      rm ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
-      rm ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts
-      rm ${SNAPCRAFT_PRIME}/usr/share/epiphany-browser/mime-types-permissions.xml
-      touch ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
-      touch ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts
-      touch ${SNAPCRAFT_PRIME}/usr/share/epiphany-browser/mime-types-permissions.xml
+      #rm ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
+      #rm ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts
+      #rm ${SNAPCRAFT_PRIME}/usr/share/epiphany-browser/mime-types-permissions.xml
+      #touch ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/blacklisted.certs
+      #touch ${SNAPCRAFT_PRIME}/usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts
+      #touch ${SNAPCRAFT_PRIME}/usr/share/epiphany-browser/mime-types-permissions.xml
       
   packages:
     plugin: nil
