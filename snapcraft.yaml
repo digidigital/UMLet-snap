@@ -20,7 +20,7 @@ license: GPL-3.0-only
 environment:
   JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64/bin
   JAVA_CMD: $SNAP/usr/lib/jvm/java-11-openjdk-amd64/bin/java
-  UMLET_JAVA_OPTS: --patch-module java.desktop=$SNAP/Umlet/java-patches/compiled/java.desktop -Duser.home=$SNAP_USER_DATA
+  UMLET_JAVA_OPTS: -Duser.home=$SNAP_USER_DATA
   UMLET_HOME: $SNAP/Umlet
   PATH: $SNAP/usr/lib/jvm/java-11-openjdk-amd64/bin:$SNAP/Umlet:$PATH
   LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib
@@ -51,16 +51,6 @@ parts:
       wget https://www.umlet.com/download/umlet_15_0/umlet-standalone-15.0.0.zip      
       unzip -o -d $SNAPCRAFT_PART_INSTALL umlet*.zip 
       
-      wget https://github.com/digidigital/UMLet-snap/raw/main/java-patches/compiled/java.desktop/sun/awt/X11/XDesktopPeer.class
-      mkdir -p ${SNAPCRAFT_PART_INSTALL}/Umlet/java-patches/compiled/java.desktop/sun/awt/X11
-      mv XDesktopPeer.class ${SNAPCRAFT_PART_INSTALL}/Umlet/java-patches/compiled/java.desktop/sun/awt/X11/XDesktopPeer.class
-      
-      wget https://raw.githubusercontent.com/digidigital/runescape-snap/master/osrs/java-patches/src/java.desktop/unix/classes/sun/awt/X11/DesktopPeer.java
-      wget https://raw.githubusercontent.com/digidigital/runescape-snap/master/osrs/java-patches/src/java.desktop/unix/classes/sun/awt/X11/XDesktopPeer.java
-      
-      mkdir -p ${SNAPCRAFT_PART_INSTALL}/Umlet/java-patches/src/java.desktop/unix/classes/sun/awt/X11
-      mv *.java ${SNAPCRAFT_PART_INSTALL}/Umlet/java-patches/src/java.desktop/unix/classes/sun/awt/X11/
-
       chmod +x $SNAPCRAFT_PART_INSTALL/Umlet/umlet.sh
       mkdir -p ${SNAPCRAFT_PRIME}/usr/share/applications
       cp -r ${SNAPCRAFT_PART_INSTALL}/Umlet/img/umlet_logo.png ${SNAPCRAFT_PRIME}/usr/share/applications/umlet-standalone.png
