@@ -1,6 +1,6 @@
 name: umlet-standalone
 title: UMLet
-version: '15.0.0'
+version: '15.1'
 summary: Free UML Tool for Fast UML Diagrams 
 description: |
   UMLet is a free, open-source UML tool with a simple user interface: draw UML diagrams fast,
@@ -48,7 +48,7 @@ parts:
       - wget
       - unzip
     override-build: |
-      wget https://www.umlet.com/download/umlet_15_0/umlet-standalone-15.0.0.zip      
+      wget https://www.umlet.com/download/umlet_15_1/umlet-standalone-15.1.zip    
       unzip -o -d $SNAPCRAFT_PART_INSTALL umlet*.zip 
       
       chmod +x $SNAPCRAFT_PART_INSTALL/Umlet/umlet.sh
